@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 2vh 20vw;
+  color: var(--color-text-primary);
+}
+
+.header {
+  padding-top: 1vh;
+  padding-bottom: 3vh;
+  border-bottom: 2px solid var(--color-line-primary);
+  font-size: 18px;
+}
+
+@media (max-width: 576px) {
+  .container {
+    margin: 2vh 10vw;
+  }
+}

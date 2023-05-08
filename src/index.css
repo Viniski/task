@@ -1,0 +1,22 @@
+:root {
+  --color-bg-primary: #ffffff;
+
+  --color-text-primary: #36435f;
+  --color-text-secondary: #96a0b5;
+
+  --color-line-primary: #e2dfdf;
+
+  --color-button-first: #3e81cf;
+  --color-button-second: #60c2ec;
+}
+
+html,
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
