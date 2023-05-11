@@ -1,41 +1,34 @@
-import { useEffect, useState } from "react";
-import PostsForm from "./components/posts-form";
-import PostsList from "./components/posts-list";
-import { sendData } from "../../api/helpers";
-import { axiosInstance } from "../../axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PostsForm } from "./components/posts-form";
+import { PostsList } from "./components/posts-list";
+import { sendPost } from "../../api/helpers";
 import styles from "./posts.module.css";
-import type { Posts, Post } from "../../types/types";
+import type { Post } from "../../types/types";
 
 function PostsComponent() {
-  const [posts, setPosts] = useState<Posts | []>([]);
+  const queryClient = useQueryClient();
 
-  const submit = async (post: Post) => {
-    try {
-      const res = await sendData(post);
-      setPosts((prevState) => [...prevState, res]);
-    } catch (err) {
-      console.error(err);
-    }
+  const { mutate, isLoading, isError } = useMutation({
+    mutationFn: sendPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+
+  const handleAddPost = (post: Post) => {
+    mutate(post);
   };
-
-  const fetchData = async () => {
-    try {
-      const { data } = await axiosInstance.get("/posts");
-      setPosts(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div className={styles.container}>
       <h1 className={styles.header}>Post Your Idea</h1>
-      <PostsForm submit={submit} />
-      <PostsList posts={posts} />
+      <PostsForm submit={handleAddPost} />
+      {isError && <span className={styles.error}>Wystąpił błąd!</span>}
+      {isLoading ? (
+        <span className={styles.info}>Loading...</span>
+      ) : (
+        <PostsList />
+      )}
     </div>
   );
 }

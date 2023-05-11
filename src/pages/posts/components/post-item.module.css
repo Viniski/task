@@ -1,5 +1,5 @@
 .post {
-  margin-top: 2vh;
+  margin: 2rem 0;
 }
 
 .header {
@@ -9,42 +9,31 @@
 }
 
 .avatar {
-  width: 5vw;
+  width: 5rem;
 }
 
 .avatar img {
   align-items: center;
-  width: 3vw;
-  height: 3vw;
+  width: 4rem;
+  height: 4rem;
 }
 
 .title {
   display: flex;
   align-items: center;
-  height: 3vw;
+  height: 4rem;
 }
 
 .title h2 {
-  font-size: 14px;
+  font-size: 1.8rem;
+}
+
+.content {
+  padding-top: 0.5rem;
 }
 
 .content p {
-  font-size: 12px;
+  font-size: 1.6rem;
   text-align: justify;
   color: var(--color-text-secondary);
-}
-
-@media (max-width: 576px) {
-  .title {
-    height: 8vw;
-  }
-
-  .avatar {
-    width: 10vw;
-  }
-
-  .avatar img {
-    width: 8vw;
-    height: 8vw;
-  }
 }

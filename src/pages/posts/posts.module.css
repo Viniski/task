@@ -1,19 +1,43 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin: 2vh 20vw;
+  margin: 2rem;
   color: var(--color-text-primary);
 }
 
 .header {
-  padding-top: 1vh;
-  padding-bottom: 3vh;
+  padding-bottom: 2rem;
   border-bottom: 2px solid var(--color-line-primary);
-  font-size: 18px;
+  font-size: 2.4rem;
 }
 
-@media (max-width: 576px) {
+.info {
+  margin: auto;
+  padding: 2rem 0;
+  font-size: 1.4rem;
+}
+
+.error {
+  margin: auto;
+  padding: 2rem 0;
+  color: red;
+  font-size: 1.4rem;
+}
+
+@media (min-width: 600px) {
   .container {
-    margin: 2vh 10vw;
+    margin: 2rem 8rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .container {
+    margin: 2rem 18rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    margin: 2rem 24rem;
   }
 }

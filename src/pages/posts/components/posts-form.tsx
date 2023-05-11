@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z, ZodType } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { Post } from "../../../types/types";
 import avatar from "./../../../assets/avatar.png";
 import styles from "./posts-form.module.css";
 
@@ -6,32 +9,32 @@ type Props = {
   submit: (post: { title: string; content: string }) => void;
 };
 
-function PostsForm({ submit }: Props) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [error, setError] = useState("");
+export function PostsForm({ submit }: Props) {
+  const schema: ZodType<Post> = z.object({
+    title: z
+      .string()
+      .min(2, { message: "Post title must be at least 2 characters" })
+      .max(30, { message: "Post title  must be at most 30 characters" }),
+    content: z
+      .string()
+      .min(2, { message: "Post content must be at least 2 characters" }),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (title.length > 2 && content.length > 2) {
-      submit({ title, content });
-      setContent("");
-      setTitle("");
-      setError("");
-    } else {
-      setError("Post title and content must be more than 2 characters long.");
-    }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Post>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = (data: Post) => {
+    submit(data);
+    reset();
   };
 
-  const handleTitle = (e: React.FormEvent) => {
-    const target = e.target as HTMLTextAreaElement;
-    setTitle(String(target.value));
-  };
-
-  const handleContent = (e: React.FormEvent) => {
-    const target = e.target as HTMLTextAreaElement;
-    setContent(String(target.value));
-  };
+  errors.content && console.log(errors.content.message);
 
   return (
     <div className={styles.wrapper}>
@@ -43,32 +46,41 @@ function PostsForm({ submit }: Props) {
           <h2 className={styles.header}>Hello!</h2>
           <h3 className={styles.info}>Post your message here:</h3>
         </div>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <input
-            value={title}
-            onChange={handleTitle}
+            {...register("title")}
             type="text"
             name="title"
             className={styles.input}
             placeholder="Add a title"
             aria-label="Add a title"
+            aria-invalid={errors.title ? "true" : "false"}
           />
+          {errors.title && (
+            <span className={styles.error} role="alert">
+              {errors.title.message}
+            </span>
+          )}
+
           <textarea
-            value={content}
-            onChange={handleContent}
+            {...register("content")}
             name="content"
             className={styles.textarea}
             placeholder="Add your post"
             aria-label="Add your post"
+            aria-invalid={errors.title ? "true" : "false"}
           />
+          {errors.content && (
+            <span className={styles.error} role="alert">
+              {errors.content.message}
+            </span>
+          )}
+
           <button type="submit" className={styles.button} aria-label="Sumbit">
             Add post
           </button>
-          {error && <p className={styles.error}>{error}</p>}
         </form>
       </div>
     </div>
   );
 }
-
-export default PostsForm;

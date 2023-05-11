@@ -6,7 +6,7 @@ type Props = {
   content: string;
 };
 
-function PostItem({ title, content }: Props) {
+export function PostItem({ title, content }: Props) {
   return (
     <div className={styles.post}>
       <div className={styles.header}>
@@ -23,5 +23,3 @@ function PostItem({ title, content }: Props) {
     </div>
   );
 }
-
-export default PostItem;

@@ -4,12 +4,24 @@
 }
 
 .header {
-  padding-top: 3vh;
-  padding-bottom: 2vh;
-  font-size: 18px;
+  padding: 2rem 0;
+  font-size: 2.2rem;
 }
 
 .posts {
-  padding-left: 2vw;
+  padding-left: 2rem;
   border-left: 2px dashed var(--color-line-primary);
+}
+
+.info {
+  margin: auto;
+  padding: 2rem 0;
+  font-size: 1.4rem;
+}
+
+.error {
+  margin: auto;
+  padding: 2rem 0;
+  color: red;
+  font-size: 1.4rem;
 }

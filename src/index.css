@@ -12,7 +12,22 @@
 
 html,
 body {
+  font-size: 10px;
   font-family: "Open Sans", sans-serif;
+}
+
+@media (min-width: 576px) {
+  html,
+  body {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 992px) {
+  html,
+  body {
+    font-size: 12px;
+  }
 }
 
 * {

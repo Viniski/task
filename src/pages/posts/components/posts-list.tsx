@@ -1,22 +1,25 @@
-import PostItem from "./post-item";
+import { useQuery } from "@tanstack/react-query";
+import { PostItem } from "./post-item";
 import styles from "./posts-list.module.css";
-import type { Posts } from "../../../types/types";
+import { fetchPosts } from "../../../api/helpers";
 
-type Props = {
-  posts: Posts;
-};
+export function PostsList() {
+  const { data: posts, isError, isLoading } = useQuery(["posts"], fetchPosts);
 
-function PostsList({ posts }: Props) {
   return (
     <div className={styles.list}>
       <h2 className={styles.header}>People Ideas</h2>
       <div className={styles.posts}>
-        {posts.map((post) => (
-          <PostItem title={post.title} content={post.content} key={post.id} />
-        ))}
+        {isError && <span className={styles.error}>Wystąpił błąd!</span>}
+        {isLoading ? (
+          <span className={styles.info}>Loading...</span>
+        ) : (
+          posts &&
+          posts.map((post) => (
+            <PostItem title={post.title} content={post.content} key={post.id} />
+          ))
+        )}
       </div>
     </div>
   );
 }
-
-export default PostsList;
